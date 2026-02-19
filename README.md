@@ -40,16 +40,29 @@ graph TD
 *   `POST /api/v1/translations` : Sauvegarde (Draft).
 *   `POST /api/v1/publish` : Génère les fichiers JSON statiques et incrémente la version.
 
-### Stratégie de Stockage (Abstraction)
-Pour ne pas lier le projet à un système de fichiers spécifique, nous utiliserons une interface :
-```java
-public interface FileStorageService {
-    void save(String path, String content);
-    String read(String path);
-}
+### Stratégie de Stockage : Système de Fichiers (File System)
+Au lieu d'une base de données complexe, nous stockerons les données directement sous forme de fichiers JSON sur le disque du serveur. C'est simple, performant et facile à sauvegarder.
+
+#### Structure des Dossiers
+```text
+/storage
+  ├── config.json           # La configuration globale (versions)
+  └── i18n
+      ├── fr.v1.json
+      ├── fr.v2.json
+      ├── en.v1.json
+      └── ...
 ```
-*   **Implémentation V1** : `LocalFileSystemStorage` (stockage dossier local).
-*   **Implémentation V2** : `S3Storage` (AWS/MinIO) pour la scalabilité.
+
+#### Implémentation Java (Spring Boot)
+Nous utiliserons `java.nio.file` pour lire et écrire.
+*   **Service** : `JsonFileStorageService`
+*   **Méthodes** :
+    *   `saveConfig(ConfigDto config)` : Écrit dans `storage/config.json`.
+    *   `saveTranslation(String lang, String version, Map<String, String> content)` : Écrit dans `storage/i18n/{lang}.v{version}.json`.
+    *   `readConfig()` : Lit et parse le fichier JSON.
+
+*Avantage* : Les fichiers générés sont directement ceux que la librairie consomme. Pas de conversion nécessaire.
 
 ---
 
@@ -77,8 +90,8 @@ La librairie existante n'aura besoin que d'un changement de configuration pour p
 ```typescript
 // Dans l'application client
 WordingLibraryModule.forRoot({
-  baseUrl: 'https://api.votre-plateforme.com/api/v1/public',
-  // ...
+    baseUrl: 'https://api.votre-plateforme.com/api/v1/public',
+    // ...
 })
 ```
 La librairie reste "bête" : elle ne fait que lire ce que la plateforme lui sert.
