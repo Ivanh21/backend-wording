@@ -1,0 +1,25 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:backend-wording >---------------------
+[INFO] Building backend-wording 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ backend-wording ---
+[INFO] Deleting C:\Users\Alae eddine\IdeaProjects\backend-wording\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ backend-wording ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.145 s
+[INFO] Finished at: 2026-02-19T13:39:47Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-resources-plugin:3.3.1:resources (default-resources) on project backend-wording: filtering C:\Users\Alae eddine\IdeaProjects\backend-wording\src\main\resources\application.properties to C:\Users\Alae eddine\IdeaProjects\backend-wording\target\classes\application.properties failed with MalformedInputException: Input length = 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
